@@ -1,0 +1,11 @@
+SVMModel = fitcecoc(X, Y, 'FitPosterior',true);
+SVMModel.predict(X(1,:));
+gscatter(X(:,1), X(:,2), Y, 'rgb');
+hold on;
+h=0.1;
+[X1,X2] = meshgrid(min(X(:,1)):h:max(X(:,1)), min(X(:,2)):h:max(X(:,2))); 
+[~,~,~, posteriors]  = SVMModel.predict([X1(:), X2(:)]);  % calculate scores at the each grid point
+scatter(X1(:), X2(:) , 20, posteriors, "filled", "MarkerFaceAlpha", 0.2);
+xlabel('Petal length')
+ylabel('Petal width')
+hold off;
